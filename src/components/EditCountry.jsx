@@ -1,41 +1,51 @@
 import React from "react";
 
 class EditCountry extends React.Component {
-  state = { name: "", description: "", airline: "", year: "", loading: true, id: this.props.match.params.id };
+  state = {
+    name: "",
+    description: "",
+    airline: "",
+    year: "",
+    loading: true,
+    id: this.props.match.params.id,
+  };
+
   onInputChange = (event) => {
+    const key = event.target.id;
     this.setState({
-      [event.target.id]: event.target.value
-    })
+      [key]: event.target.value,
+    });
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    const { id, name, description, airline, year } = this.state
+    const { id, name, description, airline, year } = this.state;
     await fetch(`http://localhost:3000/countries/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, description, airline, year }),
+      body: JSON.stringify({ country: { name, description, airline, year }}),
     });
     this.props.history.push("/countries");
   };
 
   async componentDidMount() {
-    const { id } = this.state
+    const { id } = this.state;
     const response = await fetch(`http://localhost:3000/countries/${id}`);
     const { name, description, airline, year } = await response.json();
     this.setState({ name, description, airline, year, loading: false });
   }
 
   render() {
+    console.log(this.state);
     const { name, description, airline, year, loading } = this.state;
     return (
       !loading && (
         <div className="container">
           <h1>Edit a country</h1>
           <form onSubmit={this.onFormSubmit}>
-            <label htmlFor="name">Name: </label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               name="name"
@@ -43,14 +53,14 @@ class EditCountry extends React.Component {
               onChange={this.onInputChange}
               value={name}
             />
-            <label htmlFor="description">Description: </label>
+            <label htmlFor="description">Adventures</label>
             <textarea
-            name="description"
-            id="description"
-            onChange={this.onInputChange}
-            value={description}
+              name="description"
+              id="description"
+              onChange={this.onInputChange}
+              value={description}
             ></textarea>
-            <label htmlFor="airline">Airline used: </label>
+            <label htmlFor="airline">Airline</label>
             <input
               type="text"
               name="airline"
@@ -58,7 +68,7 @@ class EditCountry extends React.Component {
               onChange={this.onInputChange}
               value={airline}
             />
-            <label htmlFor="year">Year visited: </label>
+            <label htmlFor="year">Year</label>
             <input
               type="text"
               name="year"

@@ -7,8 +7,8 @@ class NavBar extends React.Component {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/countries">Countries</Link>
+        <Link to="/countries/create">Add Country</Link>
         {/* <Link to="/countries/show">Map</Link> */}
-
       </nav>
     );
   }

@@ -2,38 +2,57 @@ import React from "react";
 
 class AddCountry extends React.Component {
   onInputChange = (event) => {
+    const key = event.target.id;
     this.setState({
-      [event.target.id]: event.target.value,
+      [key]: event.target.value,
     });
   };
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    // const body = {
-    //   country: this.state,
-    // };
+    const body = {
+      country: this.state,
+    };
     await fetch("http://localhost:3000/countries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(body),
     });
     this.props.history.push("/countries");
   };
+
   render() {
     return (
       <div className="container">
-          <h1>Add a country</h1>
-        <form>
-          <label htmlFor="title">Name: </label>
-          <input type="text" name="name" id="name" />
-          <label htmlFor="description">Description: </label>
-          <textarea name="description" id="description"></textarea>
-          <label htmlFor="airline">Airline used: </label>
-          <input type="text" name="airline" id="airline" />
-          <label htmlFor="year">Year visited: </label>
-          <input type="text" name="year" id="year" />
+        <h1>Add a country</h1>
+        <form onSubmit={this.onFormSubmit}>
+          <label htmlFor="name">Name</label>
+          <input 
+          type="text" 
+          name="name" 
+          id="name"
+          onChange={this.onInputChange} 
+          />
+          <label htmlFor="description">Adventures</label>
+          <textarea 
+          name="description" 
+          id="description"
+          onChange={this.onInputChange}
+          ></textarea>
+          <label htmlFor="airline">Airline</label>
+          <input type="text" 
+          name="airline" 
+          id="airline"
+          onChange={this.onInputChange}
+          />
+          <label htmlFor="year">Year</label>
+          <input type="text" 
+          name="year" 
+          id="year" 
+          onChange={this.onInputChange}
+          />
           <input type="submit" value="Submit" />
         </form>
       </div>
