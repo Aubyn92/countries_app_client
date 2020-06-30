@@ -3,15 +3,20 @@ import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import Countries from './Countries'
 import NoMatch from './NoMatch'
+import Navbar from "../shared/Navbar";
 
 class App extends React.Component {
   render() {
     return (
+      <>
+      <Navbar />
       <Switch>
         <Route path="/countries" component={Countries} />
+        <Route exact path="/countries" render={(props) => <Countries {...props} myProp="my prop" />} />
         <Route exact path="/" component={Home} />
         <Route component={NoMatch} />
       </Switch>
+      </>
     );
   }
 }
