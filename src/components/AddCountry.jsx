@@ -9,9 +9,9 @@ class AddCountry extends React.Component {
 
   onFormSubmit = async (event) => {
     event.preventDefault();
-    const body = {
-      country: this.state,
-    };
+    // const body = {
+    //   country: this.state,
+    // };
     await fetch("http://localhost:3000/countries", {
       method: "POST",
       headers: {
@@ -24,6 +24,7 @@ class AddCountry extends React.Component {
   render() {
     return (
       <div className="container">
+          <h1>Add a country</h1>
         <form>
           <label htmlFor="title">Name: </label>
           <input type="text" name="name" id="name" />
