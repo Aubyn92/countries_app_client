@@ -12,10 +12,26 @@ nav {
   border: 1px solid black;
 }
 
-nav a {
+nav a, nav span {
   text-decoration: none;
   color: crimson;
   margin: 0px 10px;
+  cursor: pointer;
+}
+
+.edit-delete-container {
+  margin: 20px 0px;
+}
+
+.edit-delete-container a, .edit-delete-container span {
+  margin-right: 10px;
+  color: crimson;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bookmark {
+  padding: 10px;
 }
 
 .container {
@@ -43,19 +59,4 @@ form input[type=submit] {
 form textarea {
   resize: none;
   height: 100px;
-}
-
-.edit-delete-container {
-  margin: 20px 0px;
-}
-
-.edit-delete-container a, span {
-  margin-right: 10px;
-  color: crimson;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.bookmark {
-  padding: 10px;
 }

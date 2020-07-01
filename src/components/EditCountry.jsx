@@ -20,10 +20,11 @@ class EditCountry extends React.Component {
   onFormSubmit = async (event) => {
     event.preventDefault();
     const { id, name, description, airline, year } = this.state;
-    await fetch(`http://localhost:3000/countries/${id}`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/countries/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({ country: { name, description, airline, year }}),
     });
@@ -32,7 +33,11 @@ class EditCountry extends React.Component {
 
   async componentDidMount() {
     const { id } = this.state;
-    const response = await fetch(`http://localhost:3000/countries/${id}`);
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/countries/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });    
     const { name, description, airline, year } = await response.json();
     this.setState({ name, description, airline, year, loading: false });
   }

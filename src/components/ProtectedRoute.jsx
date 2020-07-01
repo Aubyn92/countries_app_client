@@ -7,14 +7,23 @@ class ProtectedRoute extends React.Component {
     loading: true,
   };
 
-  componentDidMount() {
-    const token = localStorage.getItem("token");
-    if (token === "password") {
-      this.setState({
-        auth: true,
-        loading: false,
-      });
-    } else {
+  async componentDidMount() {
+    try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          })
+      if (response.status >= 400) {
+        throw(new Error("not authorized"))
+      } else {        
+        this.setState({
+          auth: true,
+          loading: false,
+        });
+      }
+    } catch(err) {
+      console.log(err.message)
       this.setState({
         loading: false,
       });
@@ -24,7 +33,7 @@ class ProtectedRoute extends React.Component {
   render() {
     const { loading, auth } = this.state;
     if (!loading && !auth) {
-      return <Redirect to="/" />;
+      return <Redirect to="/login" />;
     } else {
       return !loading && (
         <Route

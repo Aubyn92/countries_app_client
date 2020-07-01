@@ -13,10 +13,11 @@ class AddCountry extends React.Component {
     const body = {
       country: this.state,
     };
-    await fetch("http://localhost:3000/countries", {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/countries`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify(body),
     });

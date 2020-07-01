@@ -7,14 +7,20 @@ class Countries extends React.Component {
   state = { countries: [] };
 
   getCountries = async () => {
-    const response = await fetch("http://localhost:3000/countries");
-    const countries = await response.json();
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/countries`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });    const countries = await response.json();
     this.setState({ countries: countries });
   };
 
   deleteCountry = async (id) => {
-    await fetch(`http://localhost:3000/countries/${id}`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/countries/${id}`, {
       method: "DELETE",
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     });
     this.getCountries();
   };
